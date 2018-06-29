@@ -17,11 +17,12 @@ int main()
 	strcpy_s(word2, word1);
 	//printf("%s\n%s\n", word1, word2);
 
-	while (word1[i] != NULL) {
+	while (word1[i]) {
 		if (word1[i] == '@') {
 			if (!check) {
 				check = true;
 				i++;
+				if (!word1[i]) break;
 			}
 			else {
 				check = false;
