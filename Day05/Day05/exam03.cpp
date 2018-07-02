@@ -8,6 +8,7 @@ int main()
 	char cBuf[256] = {};
 	char tmp[32] = {};
 	int head = 0, tail = 0, index;
+	int start, end;
 
 	//add 문자열을 버퍼에 입력
 	//del 특정위치 문자 삭제
@@ -32,7 +33,7 @@ int main()
 			tail += strlen(tmp);
 		}
 		else if (!strcmp(szCmd, "del")) {
-			printf("삭제할 문자의 위치 입력 : ");
+			/*printf("삭제할 문자의 위치 입력 : ");
 			scanf_s("%d", &index);
 			printf("%d번째에 있는 문자 %c를 삭제\n", index, cBuf[index - 1]);
 
@@ -40,7 +41,17 @@ int main()
 				cBuf[i] = cBuf[i + 1];
 			}
 			
-			tail--;
+			tail--;*/
+			printf("삭제할 문자열의 시작위치 입력 : ");
+			scanf_s("%d", &start);
+			getchar();
+			printf("삭제할 문자열의 끝위치 입력 : ");
+			scanf_s("%d", &end);
+			for (int i = start - 1; i < tail; i++) {
+				cBuf[i] = cBuf[i + end - start + 1];
+			}
+			tail -= end - start + 1;
+			
 		}
 		else if (!strcmp(szCmd, "inl")) {
 			int count = 0;
