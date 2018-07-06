@@ -63,15 +63,4 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="a.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-    <Text Include="b.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-    <Text Include="aa.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-  </ItemGroup>
 </Project>

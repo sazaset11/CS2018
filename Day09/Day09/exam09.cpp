@@ -13,7 +13,7 @@ void inputData(SGO *sgo, char *data) {
 	const char *deli = " ";
 	char *temp;
 	char *pToken = strtok_s(data, deli, &temp);
-
+	if (!temp) return;
 	pToken = strtok_s(NULL, deli, &temp);
 	strcpy_s(sgo->m_szName, sizeof(sgo->m_szName), pToken);
 	pToken = strtok_s(NULL, deli, &temp);
