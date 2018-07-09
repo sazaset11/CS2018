@@ -1,2 +1,4 @@
 ﻿  exam05.cpp
+c:\users\jica\desktop\work\cs2018\day05\day05\exam05.cpp(247): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\jica\desktop\work\cs2018\day05\day05\exam05.cpp(238): warning C4101: 'szCmd' :참조되지 않은 지역 변수입니다.
   Day05.vcxproj -> C:\Users\jica\Desktop\Work\CS2018\Day05\Debug\Day05.exe
