@@ -10,6 +10,7 @@ int main() {
 	updateBuffer(hdout);
 
 	while (1) {
+		//setCursor(hdout, 0, 0);
 		setCursor(hdout, 0, 25);
 
 		printf("					]");

@@ -1,4 +1,6 @@
+#include "../Day12/Day12/stdafx.h"
 #include "stdafx.h"
+#include "../Day12/Day12/maptool.h"
 
 #define SCREEN_BUF_SIZE 2000
 #define SCREEN_WIDTH 80
@@ -19,6 +21,11 @@ namespace tge {
 		CHAR_INFO *pBuf = g_chiBuffer;
 		pBuf[80 * y + x].Char.UnicodeChar = code;
 		pBuf[80 * y + x].Attributes = attr;
+	}
+
+	CHAR_INFO *getCharacter(int x, int y) {
+		CHAR_INFO *pBuf = g_chiBuffer;
+		return &(pBuf[80 * y + x]);
 	}
 
 	void clearScreenBuffer(WCHAR code, WORD attr) {
@@ -48,7 +55,15 @@ namespace tge {
 	void drawBox(int x, int y, int width, int height, WCHAR code, WORD attr) {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				setCharacter(x + j, y + i, code, attr);
+				int _x = x + j;
+				
+				if (_x > 79) _x = 79;
+				
+				int _y = y + i;
+				
+				if (_y > 24) _y = 24;
+				
+				setCharacter(_x, _y, code, attr);
 			}
 		}
 	}
@@ -71,7 +86,15 @@ namespace tge {
 
 			for (int j = height + i; j > 0; j--) {
 				if (j - 1 <= i * 2) {
-					setCharacter(x + a, y + i, code, attr);
+					int _x = x + a;
+
+					if (_x > 79) _x = 79;
+
+					int _y = y + i;
+
+					if (_y > 24) _y = 24;
+
+					setCharacter(_x, _y, code, attr);
 				}
 				a--;
 			}
@@ -90,6 +113,22 @@ namespace tge {
 			strcpy_s(szBufToken[_nTokenIndex++], sizeof(szBufToken[_nTokenIndex]), szpTemp);
 			szpTemp = strtok_s(NULL, pzDelimiter, &pNextToken);
 		}
+		if (atoi(szBufToken[1]) < 0) {
+			strcpy_s(szBufToken[1], 16, "79");
+			g_cdCurrentCursorPos.X = 79;
+		}
+		if (atoi(szBufToken[1]) > 79) {
+			strcpy_s(szBufToken[1], 16, "0");
+			g_cdCurrentCursorPos.X = 0;
+		}
+		if (atoi(szBufToken[2]) < 0) {
+			strcpy_s(szBufToken[2], 16, "24");
+			g_cdCurrentCursorPos.Y = 24;
+		}
+		if (atoi(szBufToken[2]) > 24) {
+			strcpy_s(szBufToken[2], 16, "0");
+			g_cdCurrentCursorPos.Y = 0;
+		}
 
 		/*printf("ÅäÅ« ¼ö : %d\n", _nTokenIndex);
 
@@ -97,5 +136,23 @@ namespace tge {
 		printf("%s\n", szBufToken[i]);
 		}*/
 		return _nTokenIndex;
+	}
+
+	int loadBinary(const char *szFileName) {
+		FILE *fp;
+		fopen_s(&fp, szFileName, "r");
+		if (fp) {
+			fread_s(g_chiBuffer, 2000 * sizeof(CHAR_INFO), sizeof(CHAR_INFO), 2000, fp);
+			fclose(fp);
+		}
+		return 1;
+	}
+
+	int saveBinary(const char *szFileName) {
+		FILE *fp;
+		fopen_s(&fp, szFileName, "w");
+		fwrite(g_chiBuffer, 2000 * sizeof(CHAR_INFO), 1, fp);
+		fclose(fp);
+		return 1;
 	}
 }

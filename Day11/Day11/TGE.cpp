@@ -48,7 +48,11 @@ namespace tge {
 	void drawBox(int x, int y, int width, int height, WCHAR code, WORD attr) {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				setCharacter(x + j, y + i, code, attr);
+				int _x = x + j;
+				if (_x > 79) _x = 79;
+				int _y = y + i;
+				if (_y > 24) _y = 24;
+				setCharacter(_x, _y, code, attr);
 			}
 		}
 	}
@@ -70,8 +74,16 @@ namespace tge {
 			int a = height - 1;
 
 			for (int j = height + i; j > 0; j--) {
+				int _x = x + a;
+
+				if (_x > 79) _x = 79;
+
+				int _y = y + i;
+
+				if (_y > 24) _y = 24;
+
 				if (j - 1 <= i * 2) {
-					setCharacter(x + a, y + i, code, attr);
+					setCharacter(_x, _y, code, attr);
 				}
 				a--;
 			}

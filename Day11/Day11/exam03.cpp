@@ -20,7 +20,7 @@ int main() {
 			{
 			case KEY_EVENT:
 				if (irlnBuf->Event.KeyEvent.bKeyDown) {
-					printf("key pressed %d\n", irlnBuf[i].Event.KeyEvent.wVirtualKeyCode);
+					//printf("key pressed %d\n", irlnBuf[i].Event.KeyEvent.wVirtualKeyCode);
 				}
 				else {
 					if (irlnBuf[i].Event.KeyEvent.wVirtualKeyCode == 81) return 0;
@@ -30,9 +30,13 @@ int main() {
 				
 				break;
 			case MOUSE_EVENT:
-				if (irlnBuf[i].Event.MouseEvent.dwButtonState == 1) {
-					printf("%d %d\n", irlnBuf[i].Event.MouseEvent.dwMousePosition.X, irlnBuf[i].Event.MouseEvent.dwMousePosition.Y);
+				printf("%d", irlnBuf[i].Event.MouseEvent.dwButtonState);
+				/*if (irlnBuf[i].Event.MouseEvent.dwButtonState == 1) {
+					printf("%d %d %d\n",irlnBuf[i].Event.MouseEvent.dwButtonState, irlnBuf[i].Event.MouseEvent.dwMousePosition.X, irlnBuf[i].Event.MouseEvent.dwMousePosition.Y);
 				}
+				else if(irlnBuf[i].Event.MouseEvent.dwButtonState == 2) {
+					printf("%d %d %d\n", irlnBuf[i].Event.MouseEvent.dwButtonState, irlnBuf[i].Event.MouseEvent.dwMousePosition.X, irlnBuf[i].Event.MouseEvent.dwMousePosition.Y);
+				}*/
 				
 				break;
 			default:

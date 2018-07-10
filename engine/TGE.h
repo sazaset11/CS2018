@@ -12,4 +12,7 @@ namespace tge {
 	void drawLineV(int, int, int, WCHAR, WORD);
 	void drawTriangle(int, int, int, WCHAR, WORD);
 	int doTokenize(char*, char[8][16]);
+	CHAR_INFO *getCharacter(int, int);
+	int loadBinary(const char*);
+	int saveBinary(const char*);
 }
