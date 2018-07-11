@@ -1,14 +1,17 @@
 #include "../Day12/Day12/stdafx.h"
 #include "stdafx.h"
-#include "../Day12/Day12/maptool.h"
+#include "maptool_struct.h"
+#include "TGE.h"
 
-#define SCREEN_BUF_SIZE 2000
-#define SCREEN_WIDTH 80
+
 
 namespace tge {
-
-
 	CHAR_INFO g_chiBuffer[SCREEN_BUF_SIZE];
+
+	CHAR_INFO *CreateScreenBuffer()	{
+		return (CHAR_INFO *)malloc(sizeof(CHAR_INFO) * SCREEN_BUF_SIZE);
+	}
+
 
 	void setCursor(HANDLE hdout, int x, int y) {
 		COORD _pos;
@@ -17,14 +20,13 @@ namespace tge {
 		SetConsoleCursorPosition(hdout, _pos);
 	}
 
-	void setCharacter(int x, int y, WCHAR code, WORD attr) {
-		CHAR_INFO *pBuf = g_chiBuffer;
+	void setCharacter(CHAR_INFO *pBuf, int x, int y, WCHAR code, WORD attr) {
+		
 		pBuf[80 * y + x].Char.UnicodeChar = code;
 		pBuf[80 * y + x].Attributes = attr;
 	}
 
-	CHAR_INFO *getCharacter(int x, int y) {
-		CHAR_INFO *pBuf = g_chiBuffer;
+	CHAR_INFO *getCharacter(CHAR_INFO *pBuf, int x, int y) {
 		return &(pBuf[80 * y + x]);
 	}
 
@@ -52,7 +54,7 @@ namespace tge {
 		WriteConsoleOutput(hdout, pBuf, coordBufSize, coordBufferCoord, &destRect);
 	}
 
-	void drawBox(int x, int y, int width, int height, WCHAR code, WORD attr) {
+	void drawBox(CHAR_INFO *pBuf, int x, int y, int width, int height, WCHAR code, WORD attr) {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				int _x = x + j;
@@ -63,24 +65,24 @@ namespace tge {
 				
 				if (_y > 24) _y = 24;
 				
-				setCharacter(_x, _y, code, attr);
+				setCharacter(pBuf, _x, _y, code, attr);
 			}
 		}
 	}
 
-	void drawLineH(int x, int y, int length, WCHAR code, WORD attr) {
+	void drawLineH(CHAR_INFO *pBuf, int x, int y, int length, WCHAR code, WORD attr) {
 		for (int i = 0; i < length; i++) {
-			setCharacter(x + i, y, code, attr);
+			setCharacter(pBuf, x + i, y, code, attr);
 		}
 	}
 
-	void drawLineV(int x, int y, int length, WCHAR code, WORD attr) {
+	void drawLineV(CHAR_INFO *pBuf, int x, int y, int length, WCHAR code, WORD attr) {
 		for (int i = 0; i < length; i++) {
-			setCharacter(x, y + i, code, attr);
+			setCharacter(pBuf, x, y + i, code, attr);
 		}
 	}
 
-	void drawTriangle(int x, int y, int height, WCHAR code, WORD attr) {
+	void drawTriangle(CHAR_INFO *pBuf, int x, int y, int height, WCHAR code, WORD attr) {
 		for (int i = 0; i < height; i++) {
 			int a = height - 1;
 
@@ -94,14 +96,14 @@ namespace tge {
 
 					if (_y > 24) _y = 24;
 
-					setCharacter(_x, _y, code, attr);
+					setCharacter(pBuf, _x, _y, code, attr);
 				}
 				a--;
 			}
 		}
 	}
 
-	int doTokenize(char *szBuf, char szBufToken[8][16]) {
+	int doTokenize(char *szBuf, char szBufToken[8][MAX_TOKEN_SIZE]) {
 		char *szpTemp;
 		char *pNextToken = NULL;
 		const char *pzDelimiter = " ";
@@ -113,22 +115,22 @@ namespace tge {
 			strcpy_s(szBufToken[_nTokenIndex++], sizeof(szBufToken[_nTokenIndex]), szpTemp);
 			szpTemp = strtok_s(NULL, pzDelimiter, &pNextToken);
 		}
-		if (atoi(szBufToken[1]) < 0) {
-			strcpy_s(szBufToken[1], 16, "79");
-			g_cdCurrentCursorPos.X = 79;
-		}
-		if (atoi(szBufToken[1]) > 79) {
-			strcpy_s(szBufToken[1], 16, "0");
-			g_cdCurrentCursorPos.X = 0;
-		}
-		if (atoi(szBufToken[2]) < 0) {
-			strcpy_s(szBufToken[2], 16, "24");
-			g_cdCurrentCursorPos.Y = 24;
-		}
-		if (atoi(szBufToken[2]) > 24) {
-			strcpy_s(szBufToken[2], 16, "0");
-			g_cdCurrentCursorPos.Y = 0;
-		}
+		//if (atoi(szBufToken[1]) < 0) {
+		//	strcpy_s(szBufToken[1], 16, "79");
+		//	g_cdCurrentCursorPos.X = 79;
+		//}
+		//if (atoi(szBufToken[1]) > 79) {
+		//	strcpy_s(szBufToken[1], 16, "0");
+		//	g_cdCurrentCursorPos.X = 0;
+		//}
+		//if (atoi(szBufToken[2]) < 0) {
+		//	strcpy_s(szBufToken[2], 16, "24");
+		//	g_cdCurrentCursorPos.Y = 24;
+		//}
+		//if (atoi(szBufToken[2]) > 24) {
+		//	strcpy_s(szBufToken[2], 16, "0");
+		//	g_cdCurrentCursorPos.Y = 0;
+		//}
 
 		/*printf("ÅäÅ« ¼ö : %d\n", _nTokenIndex);
 
@@ -138,20 +140,20 @@ namespace tge {
 		return _nTokenIndex;
 	}
 
-	int loadBinary(const char *szFileName) {
+	int loadBinary(CHAR_INFO *pBuf, const char *szFileName) {
 		FILE *fp;
 		fopen_s(&fp, szFileName, "r");
 		if (fp) {
-			fread_s(g_chiBuffer, 2000 * sizeof(CHAR_INFO), sizeof(CHAR_INFO), 2000, fp);
+			fread_s(pBuf, SCREEN_BUF_SIZE * sizeof(CHAR_INFO), sizeof(CHAR_INFO), 2000, fp);
 			fclose(fp);
 		}
 		return 1;
 	}
 
-	int saveBinary(const char *szFileName) {
+	int saveBinary(CHAR_INFO *pBuf, const char *szFileName) {
 		FILE *fp;
 		fopen_s(&fp, szFileName, "w");
-		fwrite(g_chiBuffer, 2000 * sizeof(CHAR_INFO), 1, fp);
+		fwrite(pBuf, SCREEN_BUF_SIZE * sizeof(CHAR_INFO), 1, fp);
 		fclose(fp);
 		return 1;
 	}
