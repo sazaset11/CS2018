@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "../../engine/TGE.h"
-#include "maptool_struct.h"
+#include "../../engine/maptool_struct.h"
 using namespace tge;
 
 enum { MODE_BRUSH_DRAW = 0, MODE_CMD_INPUT = 1, MODE_BRUSH_MOVE = 2, MODE_MOUSE_DRAW = 3 };
@@ -23,7 +23,7 @@ int main() {
 	clearScreenBuffer(0x2e, 0x0007);
 
 	while (1) {
-		updateBuffer(hdout);
+		updateBuffer(hdout, g_chiBuffer);
 		setCursor(hdout, 0, 0);
 		setCursor(hdout, 0, 25);
 		switch (FSM)

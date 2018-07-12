@@ -8,8 +8,8 @@ namespace tge {
 
 	void setCursor(HANDLE, int, int);
 	void setCharacter(CHAR_INFO*, int, int, WCHAR, WORD);
-	void clearScreenBuffer(WCHAR, WORD);
-	void updateBuffer(HANDLE);
+	void clearScreenBuffer(CHAR_INFO*,WCHAR, WORD);
+	void updateBuffer(HANDLE, CHAR_INFO*);
 	void drawBox(CHAR_INFO*, int, int, int, int, WCHAR, WORD);
 	void drawLineH(CHAR_INFO*, int, int, int, WCHAR, WORD);
 	void drawLineV(CHAR_INFO*, int, int, int, WCHAR, WORD);
@@ -19,4 +19,5 @@ namespace tge {
 	int loadBinary(CHAR_INFO*, const char*);
 	int saveBinary(CHAR_INFO*, const char*);
 	CHAR_INFO *CreateScreenBuffer();
+	void putSprite(int, int, int, int, CHAR_INFO*, CHAR_INFO*);
 }

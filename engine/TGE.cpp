@@ -1,9 +1,6 @@
-#include "../Day12/Day12/stdafx.h"
 #include "stdafx.h"
 #include "maptool_struct.h"
 #include "TGE.h"
-
-
 
 namespace tge {
 	CHAR_INFO g_chiBuffer[SCREEN_BUF_SIZE];
@@ -30,15 +27,14 @@ namespace tge {
 		return &(pBuf[80 * y + x]);
 	}
 
-	void clearScreenBuffer(WCHAR code, WORD attr) {
-		CHAR_INFO *pBuf = g_chiBuffer;
+	void clearScreenBuffer(CHAR_INFO *pBuf, WCHAR code, WORD attr) {
 		for (int i = 0; i < SCREEN_BUF_SIZE; i++) {
 			pBuf[i].Char.UnicodeChar = code;//9678
 			pBuf[i].Attributes = attr;
 		}
 	}
 
-	void updateBuffer(HANDLE hdout) {
+	void updateBuffer(HANDLE hdout, CHAR_INFO *pBuf) {
 		COORD coordBufSize;
 		COORD coordBufferCoord;
 		coordBufSize.X = 80;
@@ -46,7 +42,6 @@ namespace tge {
 		coordBufferCoord.X = 0;
 		coordBufferCoord.Y = 0;
 		SMALL_RECT destRect;
-		CHAR_INFO *pBuf = g_chiBuffer;
 		destRect.Top = 0;
 		destRect.Left = 0;
 		destRect.Right = destRect.Left + coordBufSize.X - 1;
@@ -147,6 +142,7 @@ namespace tge {
 			fread_s(pBuf, SCREEN_BUF_SIZE * sizeof(CHAR_INFO), sizeof(CHAR_INFO), 2000, fp);
 			fclose(fp);
 		}
+
 		return 1;
 	}
 
@@ -155,6 +151,19 @@ namespace tge {
 		fopen_s(&fp, szFileName, "w");
 		fwrite(pBuf, SCREEN_BUF_SIZE * sizeof(CHAR_INFO), 1, fp);
 		fclose(fp);
+
 		return 1;
+	}
+
+	void putSprite(int posx, int posy, int srcw, int srch, CHAR_INFO *pDest, CHAR_INFO *pSrc) {
+		int src_buf_size = srcw * srch;
+		int nStep = 0;
+		int _i = 0;
+		for (int i = 0; i < src_buf_size; i++) {
+			nStep = i / srcw;
+			pDest[_i + (nStep * SCREEN_WIDTH) + (posy * SCREEN_WIDTH) + posx] = pSrc[i];
+			_i++;
+			_i %= srcw;
+		}
 	}
 }

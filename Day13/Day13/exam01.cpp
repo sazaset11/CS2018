@@ -25,7 +25,7 @@ int main() {
 	while (_bLoop) {
 		static char szCmdBuf[128];
 
-		tge::updateBuffer(hdout);
+		//tge::updateBuffer(hdout);
 		tge::setCursor(hdout, 0, 0);
 		tge::setCursor(hdout, 0, 25);
 		//입력 처리
@@ -42,6 +42,7 @@ int main() {
 				if (irInputBuf[i].EventType == KEY_EVENT) {
 					if (irInputBuf[i].Event.KeyEvent.bKeyDown) {
 						//printf("%d", irInputBuf[i].Event.KeyEvent.wVirtualKeyCode);
+						//printf("%d %d %d", fdwOldMode, i, cNumRead);
 						switch (irInputBuf[i].Event.KeyEvent.wVirtualKeyCode) {
 						case 13: //커멘드 입력 모드 전환 
 							SetConsoleMode(hdin, fdwOldMode);
@@ -124,7 +125,7 @@ int main() {
 		playerobject::DrawObject(&g_cdPlayer, pBackScreenBuffer);
 		//전체 화면 갱신
 		memcpy_s(tge::g_chiBuffer, SCREEN_BUF_SIZE * sizeof(CHAR_INFO), pBackScreenBuffer, SCREEN_BUF_SIZE * sizeof(CHAR_INFO));
-		tge::updateBuffer(hdout);
+		tge::updateBuffer(hdout, tge::g_chiBuffer);
 	}
 
 	free(pBackScreenBuffer);

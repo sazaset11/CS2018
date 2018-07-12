@@ -1,9 +1,11 @@
-#include "stdafx2.h"
-#include "../Day13/Day13/stdafx.h"
+#include "stdafx.h"
 #include "TGE.h"
 #include "maptool_struct.h"
+#include "tge_sprite.h"
 
 using namespace tge;
+
+tge_sprite::S_SPRITE_OBJECT g_WorkSprObject;
 
 void initMapTool(S_TGE_MAPTOOL *pObj) {
 	pObj->m_cdCurrentCursorPos.X = 40;
@@ -12,6 +14,8 @@ void initMapTool(S_TGE_MAPTOOL *pObj) {
 	pObj->m_wCurrentBrushAttr = 0x00e0;
 	pObj->m_wCurrentCursorSizeX = 1;
 	pObj->m_wCurrentCursorSizeY = 1;
+	tge_sprite::Init(&g_WorkSprObject);
+
 }
 
 int parseCmd(S_TGE_MAPTOOL *pObj, char *pzBuf) {
@@ -36,7 +40,7 @@ int parseCmd(S_TGE_MAPTOOL *pObj, char *pzBuf) {
 		int _height = atoi(szTokenBuf[4]);
 		WCHAR _code = (WCHAR)strtol(szTokenBuf[5], NULL, 16);
 		WORD _attr = (WORD)strtol(szTokenBuf[6], NULL, 16);
-		drawBox(_xpos, _ypos, _width, _height, _code, _attr);
+		drawBox(g_chiBuffer, _xpos, _ypos, _width, _height, _code, _attr);
 
 		return 1;
 	}
@@ -59,7 +63,7 @@ int parseCmd(S_TGE_MAPTOOL *pObj, char *pzBuf) {
 		//이전값 대피
 		_oldPos.X = pObj->m_cdCurrentCursorPos.X;
 		_oldPos.Y = pObj->m_cdCurrentCursorPos.Y;
-		CHAR_INFO *oldInfo = getCharacter(_oldPos.X, _oldPos.Y);
+		CHAR_INFO *oldInfo = getCharacter(g_chiBuffer, _oldPos.X, _oldPos.Y);
 		_oldCode = oldInfo->Char.UnicodeChar;
 		_oldAttr = oldInfo->Attributes;
 
@@ -78,15 +82,40 @@ int parseCmd(S_TGE_MAPTOOL *pObj, char *pzBuf) {
 		return 1;
 	}
 	else if (!strcmp(szTokenBuf[0], "clear")) {
-		clearScreenBuffer(0x2e, 0x0007);
+		clearScreenBuffer(tge::g_chiBuffer, 0x2e, 0x0007);
 
 		return 1;
 	}
 	else if (!strcmp(szTokenBuf[0], "save")) {
-		return saveBinary(szTokenBuf[1]);		
+		return saveBinary(g_chiBuffer, szTokenBuf[1]);
 	}
 	else if (!strcmp(szTokenBuf[0], "load")) {
-		return loadBinary(szTokenBuf[1]);
+		return loadBinary(g_chiBuffer, szTokenBuf[1]);
+	}
+	else if (!strcmp(szTokenBuf[0], "getsprite")) {
+		int _xpos = atoi(szTokenBuf[1]);
+		int _ypos = atoi(szTokenBuf[2]);
+		int _width = atoi(szTokenBuf[3]);
+		int _height = atoi(szTokenBuf[4]);
+
+		tge_sprite::get(&g_WorkSprObject, _xpos, _ypos, _width, _height);
+
+		return 1;
+	}
+	else if (!strcmp(szTokenBuf[0], "putsprite")) {
+		int _xpos = atoi(szTokenBuf[1]);
+		int _ypos = atoi(szTokenBuf[2]);
+		if (g_WorkSprObject.m_pSpriteBuf != NULL) {
+			tge_sprite::put(&g_WorkSprObject, _xpos, _ypos);
+		}
+
+		return 1;
+	}
+	else if (!strcmp(szTokenBuf[0], "savesprite")) {
+		return tge_sprite::save(&g_WorkSprObject, szTokenBuf[1]);
+	}
+	else if (!strcmp(szTokenBuf[0], "loadsprite")) {
+		return tge_sprite::load(&g_WorkSprObject, szTokenBuf[1]);
 	}
 	else return 1;
 }
