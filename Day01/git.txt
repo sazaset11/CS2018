@@ -1,0 +1,22 @@
+add -> commit -> push (git 알고리즘)
+
+tracked , untracked (관리할 파일 설정, 해제)
+
+staged , unstaged
+
+★명령어
+git add (파일이름) : 파일의 tracked
+
+git status : git의 현재 상황
+
+git rm --cached (파일이름) : commit된 파일의 삭제
+
+git commit -m "(로그)" : 현재상황 확정
+
+git remote add origin (원격저장주소) : 파일을 올릴 주소를 저장
+
+git push -u origin master : 현재 확정된 파일을 주소에 올림(처음에만)
+
+git push : 두번째 이후로 파일을 올릴때 지정된 주소에 올림
+
+git clone (복사할 저장소 주소) : 저장소에 있는 파일들을 다운

@@ -15,17 +15,17 @@ int main() {
 
 	GetConsoleMode(hdin, &fdwOldMode);
 	SetConsoleMode(hdin, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
-	//tge::loadBinary(tge::g_chiBuffer, "../../res/map1");
-	tge::clearScreenBuffer(0x20, 0x0090);
+	//TGE::loadBinary(TGE::g_chiBuffer, "../../res/map1");
+	TGE::clearScreenBuffer(0x20, 0x0090);
 	
 
 	bool _bLoop = true;
 	static int _nFsm = 0;
 
 	while (_bLoop) {
-		tge::updateBuffer(hdout, tge::g_chiBuffer);
-		tge::setCursor(hdout, 0, 0);
-		tge::setCursor(hdout, 0, 25);
+		TGE::updateBuffer(hdout, TGE::g_chiBuffer);
+		TGE::setCursor(hdout, 0, 0);
+		TGE::setCursor(hdout, 0, 25);
 		static char szCmdBuf[128];
 		//입력 처리
 		switch (_nFsm) {
@@ -34,7 +34,7 @@ int main() {
 			static INPUT_RECORD irInputBuf[128];
 
 			printf("							");
-			tge::setCursor(hdout, 0, 26);
+			TGE::setCursor(hdout, 0, 26);
 			ReadConsoleInput(hdin, irInputBuf, 128, &cNumRead);
 
 			for (DWORD i = 0; i < cNumRead; i++) {
@@ -58,7 +58,7 @@ int main() {
 			break;
 		case 1://동기 모드
 			printf("						]");
-			tge::setCursor(hdout, 0, 25);
+			TGE::setCursor(hdout, 0, 25);
 			printf("[cmd > ");
 			gets_s(szCmdBuf, sizeof(szCmdBuf));
 
@@ -73,7 +73,7 @@ int main() {
 		{
 			char szTokenBuf[8][MAX_TOKEN_SIZE];
 
-			if (tge::doTokenize(szCmdBuf, szTokenBuf) > 0) {
+			if (TGE::doTokenize(szCmdBuf, szTokenBuf) > 0) {
 
 				if (!strcmp(szTokenBuf[0], "quit")) {
 					_bLoop = false;
@@ -89,7 +89,7 @@ int main() {
 			szCmdBuf[0] = NULL;
 		}
 		//오브잭트 처리
-		tge::setCharacter(tge::g_chiBuffer, g_player.m_Position.X, g_player.m_Position.Y, 0x41, 0x000f);
+		TGE::setCharacter(TGE::g_chiBuffer, g_player.m_Position.X, g_player.m_Position.Y, 0x41, 0x000f);
 	}
 
 	return 0;

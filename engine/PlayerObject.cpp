@@ -12,7 +12,7 @@ namespace playerobject {
 	void move(S_PlayerObject *pObj, CHAR_INFO *pMapBuf, int _dx, int _dy) {
 		int _checkx = pObj->m_Position.X + _dx;
 		int _checky = pObj->m_Position.Y + _dy;
-		CHAR_INFO *pCi = tge::getCharacter(pMapBuf, _checkx, _checky);
+		CHAR_INFO *pCi = TGE::getCharacter(pMapBuf, _checkx, _checky);
 
 		if (pMapBuf[_checky*SCREEN_WIDTH + _checkx].Attributes == 0x0007) {
 			pObj->m_Position.X = _checkx;
@@ -29,7 +29,7 @@ namespace playerobject {
 	int use(S_PlayerObject *pObj, CHAR_INFO *pMapBuf, int _dx, int _dy) {
 		int _checkx = pObj->m_Position.X + _dx;
 		int _checky = pObj->m_Position.Y + _dy;
-		CHAR_INFO *pCi = tge::getCharacter(pMapBuf, _checkx, _checky);
+		CHAR_INFO *pCi = TGE::getCharacter(pMapBuf, _checkx, _checky);
 
 		if (pMapBuf[_checky*SCREEN_WIDTH + _checkx].Attributes == 0x00c0) {
 			if (!pObj->m_nKeyCount) {
@@ -61,7 +61,7 @@ namespace playerobject {
 	void get(S_PlayerObject *pObj, CHAR_INFO *pMapBuf, int _dx, int _dy){
 		int _checkx = pObj->m_Position.X + _dx;
 		int _checky = pObj->m_Position.Y + _dy;
-		CHAR_INFO *pCi = tge::getCharacter(pMapBuf, _checkx, _checky);
+		CHAR_INFO *pCi = TGE::getCharacter(pMapBuf, _checkx, _checky);
 
 		if (pMapBuf[_checky*SCREEN_WIDTH + _checkx].Attributes == 0x00b0) {
 			pObj->m_nKeyCount++;
@@ -75,6 +75,6 @@ namespace playerobject {
 	}
 
 	void DrawObject(S_PlayerObject *pObj, CHAR_INFO *pMapBuf) {
-		tge::setCharacter(pMapBuf, pObj->m_Position.X, pObj->m_Position.Y, 0x41, 0x000f);
+		TGE::setCharacter(pMapBuf, pObj->m_Position.X, pObj->m_Position.Y, 0x41, 0x000f);
 	}
 }

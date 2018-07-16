@@ -3,7 +3,7 @@
 #include "maptool_struct.h"
 #include "tge_sprite.h"
 
-using namespace tge;
+using namespace TGE;
 
 tge_sprite::S_SPRITE_OBJECT g_WorkSprObject;
 
@@ -82,7 +82,7 @@ int parseCmd(S_TGE_MAPTOOL *pObj, char *pzBuf) {
 		return 1;
 	}
 	else if (!strcmp(szTokenBuf[0], "clear")) {
-		clearScreenBuffer(tge::g_chiBuffer, 0x2e, 0x0007);
+		clearScreenBuffer(TGE::g_chiBuffer, 0x2e, 0x0007);
 
 		return 1;
 	}

@@ -1,7 +1,7 @@
 // gameEditor.cpp: 콘솔 응용 프로그램의 진입점을 정의합니다.
 //
 #include "stdafx.h"
-#include "tge.h"
+#include "TGE.h"
 #include "maptool_struct.h"
 #include "PlayerObject.h"
 
@@ -20,10 +20,10 @@ int main()
 
 	initMapTool(&g_MapToolObject);
 	int nFSM = MODE_BRUSH_DRAW;
-	tge::setCursor(hStdout, 0, 0);
-	tge::setCursor(hStdout, 0, 26);
+	TGE::setCursor(hStdout, 0, 0);
+	TGE::setCursor(hStdout, 0, 26);
 
-	tge::clearScreenBuffer(0x2e, 0x0007);
+	TGE::clearScreenBuffer(TGE::g_chiBuffer, 0x2e, 0x0007);
 	while (1)
 	{
 		static char szCmdBuf[32];
@@ -40,10 +40,10 @@ int main()
 			for (DWORD i = 0; i < cNumRead; i++) {
 				if (irInputBuf[i].EventType == KEY_EVENT) {
 					if (irInputBuf[i].Event.KeyEvent.bKeyDown) {
-						tge::setCursor(hStdout, 0, 0);
-						tge::setCursor(hStdout, 0, 26);
+						TGE::setCursor(hStdout, 0, 0);
+						TGE::setCursor(hStdout, 0, 26);
 						printf_s("                                                 ]");
-						tge::setCursor(hStdout, 0, 26);
+						TGE::setCursor(hStdout, 0, 26);
 						printf_s("%d", irInputBuf[i].Event.KeyEvent.wVirtualScanCode);
 						//u72 d80 l75 r77
 						switch (irInputBuf[i].Event.KeyEvent.wVirtualScanCode) {
@@ -106,10 +106,10 @@ int main()
 		case MODE_CMD_INPUT:
 		{
 			//스크립트 입력처리
-			tge::setCursor(hStdout, 0, 0);
-			tge::setCursor(hStdout, 0, 26);
+			TGE::setCursor(hStdout, 0, 0);
+			TGE::setCursor(hStdout, 0, 26);
 			printf_s("                                                 ]");
-			tge::setCursor(hStdout, 0, 26);
+			TGE::setCursor(hStdout, 0, 26);
 			printf_s("[cmd >");
 			gets_s(szCmdBuf, sizeof(szCmdBuf));
 			nFSM = 0;
@@ -126,10 +126,10 @@ int main()
 			for (DWORD i = 0; i < cNumRead; i++) {
 				if (irInputBuf[i].EventType == KEY_EVENT) {
 					if (irInputBuf[i].Event.KeyEvent.bKeyDown) {
-						tge::setCursor(hStdout, 0, 0);
-						tge::setCursor(hStdout, 0, 26);
+						TGE::setCursor(hStdout, 0, 0);
+						TGE::setCursor(hStdout, 0, 26);
 						printf_s("                                                 ]");
-						tge::setCursor(hStdout, 0, 26);
+						TGE::setCursor(hStdout, 0, 26);
 						printf_s("[ move mode %d", irInputBuf[i].Event.KeyEvent.wVirtualScanCode);
 						//u72 d80 l75 r77
 						switch (irInputBuf[i].Event.KeyEvent.wVirtualScanCode) {
@@ -191,7 +191,7 @@ int main()
 		//커멘드 파싱
 		if (!parseCmd(&g_MapToolObject, szCmdBuf)) break;
 
-		tge::updateBuffer(hStdout, tge::g_chiBuffer);
+		TGE::updateBuffer(hStdout, TGE::g_chiBuffer);
 	}
 
 	return 0;

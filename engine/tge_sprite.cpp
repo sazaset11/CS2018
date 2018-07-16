@@ -42,13 +42,13 @@ namespace tge_sprite {
 	}
 
 	int put(S_SPRITE_OBJECT *pObj, int posx, int posy) {
-		tge::putSprite(posx, posy, pObj->m_header.m_cdWorkSpr.X, pObj->m_header.m_cdWorkSpr.Y, tge::g_chiBuffer, pObj->m_pSpriteBuf);
+		TGE::putSprite(posx, posy, pObj->m_header.m_cdWorkSpr.X, pObj->m_header.m_cdWorkSpr.Y, TGE::g_chiBuffer, pObj->m_pSpriteBuf);
 
 		return 0;
 	}
 
 	int put(S_SPRITE_OBJECT *pObj, int posx, int posy, CHAR_INFO *pDestScreenBuf) {
-		tge::putSprite(posx, posy, pObj->m_header.m_cdWorkSpr.X, pObj->m_header.m_cdWorkSpr.Y, pDestScreenBuf, pObj->m_pSpriteBuf);
+		TGE::putSprite(posx, posy, pObj->m_header.m_cdWorkSpr.X, pObj->m_header.m_cdWorkSpr.Y, pDestScreenBuf, pObj->m_pSpriteBuf);
 
 		return 0;
 	}
@@ -64,7 +64,7 @@ namespace tge_sprite {
 
 		for (int _desy = 0; _desy < _height; _desy++) {
 			for (int _desx = 0; _desx < _width; _desx++) {
-				pObj->m_pSpriteBuf[_desx + (_desy*_width)] = tge::g_chiBuffer[(_desx + posx) + ((_desy + posy)*SCREEN_WIDTH)];
+				pObj->m_pSpriteBuf[_desx + (_desy*_width)] = TGE::g_chiBuffer[(_desx + posx) + ((_desy + posy)*SCREEN_WIDTH)];
 			}
 		}
 

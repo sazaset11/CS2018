@@ -1,0 +1,19 @@
+﻿  gameObject.cpp
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(59): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(89): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(90): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(127): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(128): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(137): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(138): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(178): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(179): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(211): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(212): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(244): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(245): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(280): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(281): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(304): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\jica\desktop\work\cs2018\day16\day16\gameobject.cpp(305): warning C4244: '인수': 'double'에서 'irr::f32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Day16.vcxproj -> C:\Users\jica\Desktop\Work\CS2018\Day16\Debug\Day16.exe
