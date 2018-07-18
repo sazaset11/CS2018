@@ -1,2 +1,7 @@
-﻿  Day13.cpp
-  Day13.vcxproj -> C:\Users\jica\Desktop\Work\CS2018\Day13\Debug\Day13.exe
+﻿  TGE.cpp
+c1xx : fatal error C1083: 소스 파일을 열 수 없습니다. '..\..\engine\TGE.cpp': No such file or directory
+  maptool_struct.cpp
+c:\users\jica\desktop\work\cs2018\day13\day13\maptool_struct.cpp(38): error C3861: 'drawBox': 식별자를 찾을 수 없습니다.
+c:\users\jica\desktop\work\cs2018\day13\day13\maptool_struct.cpp(85): error C3861: 'saveBinary': 식별자를 찾을 수 없습니다.
+c:\users\jica\desktop\work\cs2018\day13\day13\maptool_struct.cpp(88): error C3861: 'loadBinary': 식별자를 찾을 수 없습니다.
+  코드를 생성하고 있습니다...

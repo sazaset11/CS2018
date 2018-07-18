@@ -76,7 +76,7 @@ namespace tge_sprite {
 		for (_desy = 0; _desy < _height; _desy++) {
 			for (_desx = 0; _desx < _width; _desx++) {
 				pObj->m_pSpriteBuf[_desx + (_desy*_width)] =
-					TGE::g_chiBuffer[(_desx + _xpos) + ((_desy + _ypos) *SCREEN_WIDTH)];
+					TGE::g_chiBuffer[(_desx + _xpos) + ((_desy + _ypos) * TGE::SCREEN_WIDTH)];
 			}
 		}
 		return 0;

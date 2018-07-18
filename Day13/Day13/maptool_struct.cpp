@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "../../engine/TGE.h"
+#include "../../engine2/TGE.h"
 #include "maptool_struct.h"
 
-using namespace tge;
+using namespace TGE;
 
 void initMapTool(S_TGE_MAPTOOL *pObj) {
 	pObj->m_cdCurrentCursorPos.X = 40;
