@@ -13,7 +13,7 @@ int main() {
 	S_TGE_MAPTOOL g_MapToolObject;
 	int nW = 8;
 	int nH = 4;
-	int FSM = MODE_CMD_INPUT;
+	int FSM = MODE_BRUSH_DRAW;
 	static char szCmdBuf[32];
 	static DWORD cNumRead;
 	static INPUT_RECORD irInputBuf[128];
@@ -23,7 +23,7 @@ int main() {
 	initMapTool(&g_MapToolObject);
 
 	GetConsoleMode(hdin, &fdwOldMode);
-	//SetConsoleMode(hdin, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
+	SetConsoleMode(hdin, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
 	TGE::clearScreenBuffer(0x2e, 0x0007);
 
 	while (_loop) {
@@ -65,8 +65,8 @@ int main() {
 			TGE::setCursor(hdout, 0, 25);
 			printf("[cmd > ");
 			gets_s(szCmdBuf, sizeof(szCmdBuf));
-			//SetConsoleMode(hdin, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
-			//FSM = MODE_BRUSH_DRAW;
+			SetConsoleMode(hdin, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
+			FSM = MODE_BRUSH_DRAW;
 
 			break;
 		default:

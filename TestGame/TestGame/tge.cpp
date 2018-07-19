@@ -18,13 +18,13 @@ namespace TGE {
 	void setCharacter(CHAR_INFO *pBuf, int x, int y, WCHAR code, WORD attr)
 	{
 		//chiBuffer[(80 * 5) + 5].Char.UnicodeChar = TEXT('A');
-		pBuf[(80 * y) + x].Char.UnicodeChar = code;
-		pBuf[(80 * y) + x].Attributes = attr;
+		pBuf[(100 * y) + x].Char.UnicodeChar = code;
+		pBuf[(100 * y) + x].Attributes = attr;
 	}
 
 	CHAR_INFO *getCharacter(CHAR_INFO *pBuf, int x, int y)
 	{
-		return &(pBuf[(80 * y) + x]);
+		return &(pBuf[(100 * y) + x]);
 	}
 
 	void clearScreenBuffer( WCHAR _wCode, WORD _wAttr)
@@ -50,7 +50,7 @@ namespace TGE {
 	{
 		COORD coordBufSize;
 		COORD coordBufferCoord;
-		coordBufSize.X = 80;
+		coordBufSize.X = 100;
 		coordBufSize.Y = 25;
 		coordBufferCoord.X = 0;
 		coordBufferCoord.Y = 0;

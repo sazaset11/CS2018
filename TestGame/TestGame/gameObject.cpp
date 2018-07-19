@@ -46,19 +46,19 @@ namespace cs2018prj {
 				}
 				{
 					if (TGE::input::g_KeyTable[VK_RIGHT]) {
-						if (pObj->m_vPos.X >= 78) break;
+						if (pObj->m_vPos.X >= 97) break;
 						pObj->m_vPos.X += (pObj->m_dbSpeed * _deltaTick);
 					}
 					if (TGE::input::g_KeyTable[VK_LEFT]) {
-						if (pObj->m_vPos.X <= 1) break;
+						if (pObj->m_vPos.X <= 2) break;
 						pObj->m_vPos.X -= (pObj->m_dbSpeed * _deltaTick);
 					}
 					if (TGE::input::g_KeyTable[VK_UP]) {
-						if (pObj->m_vPos.Y <= 3) break;
+						if (pObj->m_vPos.Y <= 1) break;
 						pObj->m_vPos.Y -= (pObj->m_dbSpeed * _deltaTick);
 					}
 					if (TGE::input::g_KeyTable[VK_DOWN]) {
-						if (pObj->m_vPos.Y >= 25) break;
+						if (pObj->m_vPos.Y >= 21) break;
 						pObj->m_vPos.Y += (pObj->m_dbSpeed * _deltaTick);
 					}
 
@@ -123,6 +123,7 @@ namespace cs2018prj {
 			tge_sprite::S_SPRITE_OBJECT *pSpr)
 		{
 			_Init(pObj, _pos, _dbSpeed, pSpr);
+			pObj->m_pTargetObj = NULL;
 			pObj->m_fpApply = cs2018prj::ailenObject::Apply;
 			pObj->m_fpRender = cs2018prj::playerObject::Render;
 		}
@@ -150,16 +151,48 @@ namespace cs2018prj {
 				_vdir *= _deltaTick;
 				_vdir.rotateBy(pObj->m_dbAngle);
 				pObj->m_vPos += _vdir;
-				if (pObj->m_dbWorkTick > 3.5) {
+				if (pObj->m_dbWorkTick > 5) {
 					pObj->m_dbAngle += 180;
 					pObj->m_dbWorkTick = 0;
+				}
+				if (pObj->m_pTargetObj) {
+					irr::core::vector2df a = pObj->m_vPos;
+					irr::core::vector2df b = pObj->m_pTargetObj->m_vPos;
+					double fDist = a.getDistanceFrom(b);
+					if (fDist < 10) {
+						pObj->m_nFSM = 20;
+					}
 				}
 			}
 			break;
 			case 20: //추적모드 
+			{
+				irr::core::vector2df a = pObj->m_vPos;
+				irr::core::vector2df b = pObj->m_pTargetObj->m_vPos;
+				irr::core::vector2df c = b - a;
+				double fDist = a.getDistanceFrom(b);
+				c.normalize();
+				pObj->m_vPos.X += c.X * pObj->m_dbSpeed * _deltaTick;
+				pObj->m_vPos.Y += c.Y * pObj->m_dbSpeed * _deltaTick;
+
+				/*if (a.getDistanceFrom(b) < 2.5) {
+					if (pObj->m_pWepon) {
+						cs2018prj::attackObject_claw::S_GAMEOBJECT *pWepon =
+							(cs2018prj::attackObject_claw::S_GAMEOBJECT *)pObj->m_pWepon;
+						pWepon->m_posx = pObj->m_pTargetObj->m_posx;
+						pWepon->m_posy = pObj->m_pTargetObj->m_posy;
+						pWepon->m_nFSM = 10;
+						pObj->m_nFSM = 30;
+					}
+				}*/
+				if (fDist > 10) {
+					pObj->m_nFSM = 10;
+				}
+			}
 				break;
 			case 100:
 				pObj->m_bActive = false;
+				pObj->m_pDropObj->m_nFSM = 10;
 				pObj->m_nFSM = 0;
 				break;
 			default:
@@ -202,7 +235,18 @@ namespace cs2018prj {
 					break;
 				case 11:
 				{
-					if (pObj->m_dbWorkTick > 10) {
+					if (pObj->m_pTargetObj->m_bActive) {
+						irr::core::vector2df a = pObj->m_vPos;
+						irr::core::vector2df b = pObj->m_pTargetObj->m_vPos;
+						double fDist = a.getDistanceFrom(b);
+
+						if (fDist < 1.5) {
+							pObj->m_nFSM = 0;
+							pObj->m_bActive = false;
+							pObj->m_pTargetObj->m_nFSM = 100;
+						}
+					}
+					if (pObj->m_dbWorkTick > 2) {
 						pObj->m_nFSM = 100;
 					}
 					else {
@@ -228,6 +272,68 @@ namespace cs2018prj {
 			}
 
 
+		}
+	}
+
+	namespace itemObject {
+		namespace key {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr) {
+				_Init(pObj, _pos, _dbSpeed, pSpr);
+				pObj->m_fpApply = cs2018prj::itemObject::key::Apply;
+				pObj->m_fpRender = cs2018prj::playerObject::Render;
+			}
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick) {
+				pObj->m_dbWorkTick += _deltaTick;
+				switch (pObj->m_nFSM)
+				{
+				case 0:
+					break;
+				case 10:
+					pObj->m_vPos = pObj->m_pDropObj->m_vPos;
+					pObj->m_bActive = true;
+					if (pObj->m_pTargetObj->m_bActive) {
+						irr::core::vector2df a = pObj->m_vPos;
+						irr::core::vector2df b = pObj->m_pTargetObj->m_vPos;
+						double fDist = a.getDistanceFrom(b);
+						if (fDist < 1) {
+							printf("초록색 키를 획득했습니다.");
+							pObj->m_nFSM = 0;
+							pObj->m_bActive = false;
+						}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+			void Activate(S_GAMEOBJECT *pObj) {
+				pObj->m_nFSM = 10;
+			}
+		}
+		namespace door {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr) {
+				_Init(pObj, _pos, _dbSpeed, pSpr);
+				pObj->m_fpApply = cs2018prj::itemObject::door::Apply;
+				pObj->m_fpRender = cs2018prj::playerObject::Render;
+			}
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick) {
+				pObj->m_dbWorkTick += _deltaTick;
+				switch (pObj->m_nFSM)
+				{
+				case 0:
+					break;
+				case 10:
+					pObj->m_bActive = true;
+					break;
+				default:
+					break;
+				}
+			}
+			void Activate(S_GAMEOBJECT *pObj) {
+				pObj->m_nFSM = 10;
+			}
 		}
 	}
 

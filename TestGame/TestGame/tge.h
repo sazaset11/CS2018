@@ -5,8 +5,8 @@
 
 namespace TGE {
 
-	const int SCREEN_BUF_SIZE = 2000;
-	const int SCREEN_WIDTH = 80;
+	const int SCREEN_BUF_SIZE = 2500;
+	const int SCREEN_WIDTH = 100;
 	const int MAX_TOKEN_SIZE = 64;
 
 	void setCursor(HANDLE handle, int x, int y);

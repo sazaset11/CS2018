@@ -40,7 +40,7 @@ namespace tge_sprite {
 	int save(S_SPRITE_OBJECT *pObj, const char *szFileName)
 	{
 		FILE *fp;
-		fopen_s(&fp, szFileName, "w");
+		fopen_s(&fp, szFileName, "w+");
 
 		fwrite(&(pObj->m_header), sizeof(S_SPRITE_HEADER), 1, fp);
 		fwrite(pObj->m_pSpriteBuf,

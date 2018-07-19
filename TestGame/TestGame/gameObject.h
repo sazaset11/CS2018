@@ -12,6 +12,8 @@ namespace cs2018prj {
 		irr::core::vector2df m_translation;
 		int m_nFSM;
 		bool m_bActive;
+		cs2018prj::S_GAMEOBJECT *m_pTargetObj;
+		cs2018prj::S_GAMEOBJECT *m_pDropObj;
 		void(*m_fpApply)(S_GAMEOBJECT *, double);
 		void(*m_fpRender)(S_GAMEOBJECT *, CHAR_INFO *);
 		void(*m_fpClone)(S_GAMEOBJECT *pObj);
@@ -47,6 +49,21 @@ namespace cs2018prj {
 			void Activate(S_GAMEOBJECT *pObj);
 		}
 
+	}
+
+	namespace itemObject {
+		namespace key {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+		}
+		namespace door {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+		}
 	}
 
 

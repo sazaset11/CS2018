@@ -1,0 +1,11 @@
+{
+  "name": "Kim yeong hun",
+  "distance": 16.6,
+  "national_code": 82,
+  "item": {
+    "wepon": "dagger",
+    "ap": 25
+  },
+  "comm": false,
+  "etc": [ 4,"sword", 7, 3, 2, 9 ]
+}
