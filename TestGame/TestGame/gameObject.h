@@ -17,6 +17,9 @@ namespace cs2018prj {
 		void(*m_fpApply)(S_GAMEOBJECT *, double);
 		void(*m_fpRender)(S_GAMEOBJECT *, CHAR_INFO *);
 		void(*m_fpClone)(S_GAMEOBJECT *pObj);
+		bool m_bOnWepon;
+		bool m_bOnKey;
+		char m_cDirection;
 	};
 
 	namespace playerObject {
@@ -30,12 +33,27 @@ namespace cs2018prj {
 		void Render(S_GAMEOBJECT *pObj, CHAR_INFO *pTargetBuf);
 		void Activate(S_GAMEOBJECT *pObj);
 	}
-	namespace ailenObject {
-		struct S_SUBOBJECT {};
-		void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
-			tge_sprite::S_SPRITE_OBJECT *pSpr);
-		void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
-		void Activate(S_GAMEOBJECT *pObj);
+	namespace enemyObject {
+		namespace ailenObject {
+			struct S_SUBOBJECT {};
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+			void Activate2(S_GAMEOBJECT *pObj);
+		}
+		namespace trap {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+		}
+		namespace poison {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+		}
 	}
 	namespace attackObject {
 		namespace claw {
@@ -59,6 +77,12 @@ namespace cs2018prj {
 			void Activate(S_GAMEOBJECT *pObj);
 		}
 		namespace door {
+			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
+				tge_sprite::S_SPRITE_OBJECT *pSpr);
+			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
+			void Activate(S_GAMEOBJECT *pObj);
+		}
+		namespace gun {
 			void Init(S_GAMEOBJECT *pObj, irr::core::vector2df _pos, double _dbSpeed,
 				tge_sprite::S_SPRITE_OBJECT *pSpr);
 			void Apply(S_GAMEOBJECT *pObj, double _deltaTick);
